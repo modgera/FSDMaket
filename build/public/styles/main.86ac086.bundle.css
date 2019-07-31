@@ -1,0 +1,48 @@
+.card-body {
+  max-width: 250px;
+  border: 1px solid #000;
+  border-radius: 2%; }
+
+.card__carousel {
+  height: 150px;
+  background: #dfdfdf; }
+
+.card__carousel {
+  height: 150px;
+  background: #dfdfdf;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  border-top-right-radius: 2%;
+  border-top-left-radius: 2%; }
+
+.card__carousel-switcher {
+  padding-right: 15px;
+  padding-bottom: 10px; }
+
+.card__info {
+  padding: 20px 15px 20px 15px; }
+
+.card__info-row {
+  display: flex;
+  justify-content: space-between;
+  align-content: center; }
+
+.card__info-separator {
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px; }
+
+.card__text_bold-accent {
+  font-weight: bold; }
+
+.card__text_accent {
+  color: #cc4cb0; }
+
+.card__text_accent,
+.card__text_bold-accent-faded {
+  font-weight: bold; }
+
+.card__text_bold-accent-faded {
+  color: #585858d9; }
+
