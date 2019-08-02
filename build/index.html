@@ -1,25 +1,81 @@
-<!DOCTYPE html>
-<html>
-  <head><link href="public/styles/main.86ac086.bundle.css" rel="stylesheet"></head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="initial-scale=1.0, width=device-width">
-  <title>Webpack app</title>
-  <body>
-    <h1>test pug</h1>
-<div class="card-body">
-  <div class="card__carousel">
-    <div class="card__carousel-switcher"></div>
-  </div>
-  <div class="card__info">
-    <div class="card__info-row">
-      <div class="card__number">№<span class="card__text_bold-accent">840 </span><span class="card__text_accent">люкс </span></div>
-      <div class="card__cost"><span class="card__text_bold-accent-faded">9 900р </span>в сутки</div>
-    </div><img class="card__info-row card__info-separator" src="./public/img/border-line.svg">
-    <div class="card__info-row">
-      <div class="card__stars">*****</div>
-      <div class="card__reviews"><span class="card__text_bold-accent-faded">65 </span>отзывов</div>
-    </div>
-  </div>
-</div>
-  <script type="text/javascript" src="bundle.js"></script></body>
-</html>
+<head><link href="public/styles/main.c2edead.bundle.css" rel="stylesheet"></head>Html Webpack Plugin:
+<pre>
+  Error: Child compilation failed:
+  Module not found: Error: Can't resolve './border-line.svg' in 'H:\Web Project\React\React-2019\FSDMaket\src\views\pages':
+  Error: Can't resolve './border-line.svg' in 'H:\Web Project\React\React-2019\FSDMaket\src\views\pages'
+  
+  - compiler.js:79 childCompiler.runAsChild
+    [FSDMaket]/[html-webpack-plugin]/lib/compiler.js:79:16
+  
+  - Compiler.js:339 compile
+    [FSDMaket]/[webpack]/lib/Compiler.js:339:11
+  
+  - Compiler.js:664 hooks.afterCompile.callAsync.err
+    [FSDMaket]/[webpack]/lib/Compiler.js:664:15
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [FSDMaket]/[tapable]/lib/Hook.js:154:20
+  
+  - Compiler.js:661 compilation.seal.err
+    [FSDMaket]/[webpack]/lib/Compiler.js:661:31
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [FSDMaket]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1395 hooks.optimizeAssets.callAsync.err
+    [FSDMaket]/[webpack]/lib/Compilation.js:1395:35
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [FSDMaket]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1386 hooks.optimizeChunkAssets.callAsync.err
+    [FSDMaket]/[webpack]/lib/Compilation.js:1386:32
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [FSDMaket]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1381 hooks.additionalAssets.callAsync.err
+    [FSDMaket]/[webpack]/lib/Compilation.js:1381:36
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [FSDMaket]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1377 hooks.optimizeTree.callAsync.err
+    [FSDMaket]/[webpack]/lib/Compilation.js:1377:32
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [FSDMaket]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1314 Compilation.seal
+    [FSDMaket]/[webpack]/lib/Compilation.js:1314:27
+  
+  - Compiler.js:658 compilation.finish.err
+    [FSDMaket]/[webpack]/lib/Compiler.js:658:18
+  
+  - Compilation.js:1234 hooks.finishModules.callAsync.err
+    [FSDMaket]/[webpack]/lib/Compilation.js:1234:4
+  
+  
+  - Hook.js:154 AsyncSeriesHook.lazyCompileHook
+    [FSDMaket]/[tapable]/lib/Hook.js:154:20
+  
+  - Compilation.js:1226 Compilation.finish
+    [FSDMaket]/[webpack]/lib/Compilation.js:1226:28
+  
+  - Compiler.js:655 hooks.make.callAsync.err
+    [FSDMaket]/[webpack]/lib/Compiler.js:655:17
+  
+  
+  - Compilation.js:1158 _addModuleChain
+    [FSDMaket]/[webpack]/lib/Compilation.js:1158:12
+  
+  - Compilation.js:1070 processModuleDependencies.err
+    [FSDMaket]/[webpack]/lib/Compilation.js:1070:9
+  
+</pre><script type="text/javascript" src="bundle.js"></script>

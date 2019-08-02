@@ -56,6 +56,7 @@ module.exports = env  => {
               pretty: true
             }
           },
+
           {
             test: /\.(png|svg|jpg|gif)$/,
             use: [

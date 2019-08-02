@@ -1,4 +1,5 @@
 doctype html
+include ../../libs/bemto/bemto.pug
 html
     head
     meta(charset = 'utf-8')
@@ -6,4 +7,5 @@ html
     title Webpack app
     body
         h1 test pug
-        include ../components/card/card.pug
+        include ../components/card/card
+        +card({number:'999'})
