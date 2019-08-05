@@ -1,4 +1,3 @@
-
 mixin card(data)
     div(class='card-body')
         div(class='card__carousel')
@@ -13,7 +12,7 @@ mixin card(data)
                 div(class='card__cost')
                     span(class='card__text_bold-accent-faded') 9 900р
                     |в сутки
-            img(class='card__info-row card__info-separator' src=require("/src/views/components/card/border-line.svg"))
+            include img.pug
             div(class='card__info-row')
                 div(class="card__stars") *****
                 div(class="card__reviews")

@@ -24,7 +24,7 @@ module.exports = env  => {
       ...wpPages.pages(env),
 
       new MiniCssExtractPlugin({
-        filename: 'public/styles/[name].[hash:7].bundle.css',
+        filename: 'public/styles/[name].bundle.css',
         chunkFilename: '[id].css',
       }),
 
@@ -67,7 +67,9 @@ module.exports = env  => {
           {
             test: /\.(woff|woff2|eot|ttf|otf)$/,
             use: [
-              'file-loader'
+              {
+                loader: 'file-loader?name=./public/fonts/[name].[ext]'
+              }
             ]
           },
 

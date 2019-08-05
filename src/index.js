@@ -1,4 +1,4 @@
-import './assets/styles/pages/style.scss';
+import './assets/styles/main.scss';
 
 $(document).ready(() => {
 
