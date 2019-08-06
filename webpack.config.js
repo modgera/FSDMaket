@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const wpPages = require('./config/wp-pages');
+const path = require('path');
 
 module.exports = env  => {
   return {
@@ -68,9 +69,16 @@ module.exports = env  => {
             test: /\.(woff|woff2|eot|ttf|otf)$/,
             use: [
               {
-                loader: 'file-loader?name=./public/fonts/[name].[ext]'
+                  loader: 'file-loader',
+                  options: {
+                      name: '[path][name].[ext]',
+                      context: path.resolve(__dirname, "src/assets/fonts"),
+                      outputPath: 'public/fonts',
+                      publicPath: '../',
+                      useRelativePaths: true
+                  }
               }
-            ]
+          ]
           },
 
           {
@@ -92,6 +100,12 @@ module.exports = env  => {
             use: [
               env === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader, // creates style nodes from JS strings
               { loader: 'css-loader', options: { importLoaders: 1, sourceMap: true } }, // translates CSS into CommonJS
+              {
+                loader: 'resolve-url-loader',
+                options: {
+                  sourceMap: true
+                }
+              },
               'sass-loader', // compiles Sass to CSS
             ],
           },
