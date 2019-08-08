@@ -1,0 +1,19 @@
+html {
+  @extend %body-font;
+  font-size: 16px;
+}
+
+@mixin placeholder {
+  ::-webkit-input-placeholder { @content; }
+  :-moz-placeholder           { @content; }
+  ::-moz-placeholder          { @content; }
+  :-ms-input-placeholder      { @content; }
+}
+
+@include placeholder {
+  color: rgba($main-color, 0.25);
+  // font-size: 0.875em;
+  // line-height: 1.125em;
+  // font-family: $body-font;
+
+}

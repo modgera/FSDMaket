@@ -1,32 +1,40 @@
 @font-face {
-    font-family: 'montserratbold';
-    src: url('../fonts/montserrat-bold-webfont.woff2') format('woff2'),
-         url('../fonts/montserrat-bold-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
+  font-family: 'Montserrat';
+  src: url('../fonts/montserrat-bold-webfont.woff2') format('woff2'),
+        url('../fonts/montserrat-bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal
 }
 
 
 @font-face {
-    font-family: 'montserratregular';
-    src: url('../fonts/montserrat-regular-webfont.woff2') format('woff2'),
-         url('../fonts/montserrat-regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
+  font-family: 'Montserrat';
+  src: url('../fonts/montserrat-regular-webfont.woff2') format('woff2'),
+        url('../fonts/montserrat-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @font-face {
-    font-family: 'quicksandbold';
-    src: url('../fonts/quicksand-bold-webfont.woff2') format('woff2'),
-         url('../fonts/quicksand-bold-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
+  font-family: 'quicksand';
+  src: url('../fonts/quicksand-bold-webfont.woff2') format('woff2'),
+        url('../fonts/quicksand-bold-webfont.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
 }
 
-$headline-main-font: quicksandbold, sans-serif;
-$headline-secondery-font: quicksandbold, sans-serif;
-$label-font: montserratbold, sans-serif;
-$body-font: montserratregular, sans-serif;
+%headline-main-font,
+%headline-secondary-font {
+  font-family: 'quicksand', Verdana, sans-serif;
+  font-weight: bold;
+}
+
+%label-font {
+  font-family: 'Montserrat', Verdana, sans-serif;
+  font-weight: bold;
+}
+
+%body-font {
+  font-family: 'Montserrat', Verdana, sans-serif;
+  font-weight: normal;
+}

@@ -1,20 +1,42 @@
+textarea, select, input, button {
+  outline: none; }
+
 @font-face {
-  font-family: 'montserratbold';
-  src: url(../montserrat-bold-webfont.woff2) format("woff2"), url(../montserrat-bold-webfont.woff) format("woff");
+  font-family: 'Montserrat';
+  src: url(../fonts/montserrat-bold-webfont.woff2) format("woff2"), url(../fonts/montserrat-bold-webfont.woff) format("woff");
+  font-weight: bold;
+  font-style: normal; }
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url(../fonts/montserrat-regular-webfont.woff2) format("woff2"), url(../fonts/montserrat-regular-webfont.woff) format("woff");
   font-weight: normal;
   font-style: normal; }
 
 @font-face {
-  font-family: 'montserratregular';
-  src: url(../montserrat-regular-webfont.woff2) format("woff2"), url(../montserrat-regular-webfont.woff) format("woff");
-  font-weight: normal;
+  font-family: 'quicksand';
+  src: url(../fonts/quicksand-bold-webfont.woff2) format("woff2"), url(../fonts/quicksand-bold-webfont.woff) format("woff");
+  font-weight: bold;
   font-style: normal; }
 
-@font-face {
-  font-family: 'quicksandbold';
-  src: url(../quicksand-bold-webfont.woff2) format("woff2"), url(../quicksand-bold-webfont.woff) format("woff");
-  font-weight: normal;
-  font-style: normal; }
+html {
+  font-family: 'Montserrat', Verdana, sans-serif;
+  font-weight: normal; }
+
+html {
+  font-size: 16px; }
+
+::-webkit-input-placeholder {
+  color: rgba(31, 32, 65, 0.25); }
+
+:-moz-placeholder {
+  color: rgba(31, 32, 65, 0.25); }
+
+::-moz-placeholder {
+  color: rgba(31, 32, 65, 0.25); }
+
+:-ms-input-placeholder {
+  color: rgba(31, 32, 65, 0.25); }
 
 .card-body {
   max-width: 250px;
@@ -63,4 +85,30 @@
 
 .card__text_bold-accent-faded {
   color: #585858d9; }
+
+.field-text {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 20rem; }
+
+.field-text__input {
+  height: 2.75rem;
+  border: 1px solid rgba(31, 32, 65, 0.25);
+  color: rgba(31, 32, 65, 0.25);
+  box-sizing: border-box;
+  border-radius: .25rem;
+  padding: 0.813rem 0.938rem;
+  font-size: .875rem;
+  width: 100%;
+  line-height: 1.125rem; }
+  .field-text__input:hover, .field-text__input:focus {
+    border: 1px solid rgba(31, 32, 65, 0.5);
+    color: rgba(31, 32, 65, 0.75); }
+
+.field-text__label {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: .75rem;
+  margin-bottom: .3125rem; }
 

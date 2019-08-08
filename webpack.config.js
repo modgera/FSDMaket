@@ -74,7 +74,7 @@ module.exports = env  => {
                       name: '[path][name].[ext]',
                       context: path.resolve(__dirname, "src/assets/fonts"),
                       outputPath: 'public/fonts',
-                      publicPath: '../',
+                      publicPath: '../fonts',
                       useRelativePaths: true
                   }
               }
