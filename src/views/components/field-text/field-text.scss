@@ -7,20 +7,12 @@
 
 .field-text__input {
   height: 2.75rem;
-  border: 1px solid rgba($main-color, 0.25);
-  color: rgba($main-color, 0.25);
+  border: 1px solid black;
   box-sizing: border-box;
   border-radius: .25rem;
-  padding: 0.813rem 0.938rem;
+  padding: 0.8125rem 0.9375rem;
   font-size: .875rem;
   width: 100%;
-  line-height: 1.125rem;
-  @extend %body-font;
-
-  &:hover, &:focus {
-    border: 1px solid rgba($main-color, 0.5);
-    color: rgba($main-color, 0.75);
-  }
 }
 
 .field-text__label {

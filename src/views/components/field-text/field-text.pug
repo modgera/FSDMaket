@@ -1,4 +1,4 @@
 mixin field-text(props, ...other)
     div.field-text
         label.field-text__label #{props.text}
-        input.field-text__input(type=props.type placeholder=props.placeholder ...other)
+        input.field-text__input.field-text__input_masked_date(type=props.type placeholder=props.placeholder ...other)

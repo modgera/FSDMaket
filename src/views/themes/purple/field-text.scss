@@ -1,0 +1,10 @@
+  .field-text__input {
+    border-color: rgba($main-color, 0.25);
+    color: rgba($main-color, 0.25);
+    @extend %body-font;
+
+    &:hover, &:focus {
+      border-color: rgba($main-color, 0.5);
+      color: rgba($main-color, 0.75);
+    }
+  }
