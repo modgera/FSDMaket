@@ -9,33 +9,39 @@
         //input.addEventListener("input", mask, false);
         //input.addEventListener("focus", mask, false);
         //input.addEventListener("blur", mask, false);
-        input.addEventListener("keydown", maskDateKeyDownEvent, false)
+        input.addEventListener("keypress", maskDateKeyDownEvent, false);
+        input.setAttribute("maxlength", 10);
     }
 
     function maskDateKeyDownEvent(e) {
         const delimiter = ".";
+        const allDelimitersCode = [188, 111, 110]; //,/.
         const delimiterPosition = [2, 5];
         const backspaceKey = 8;
         const deleteKey = 46;
-        const cursorPosition = this.selectionStart;
+        const cursorPosition = this.value.length;
         let inputValue = this.value;
-        const enteredSymbol = e.keyCode;
-        if (enteredSymbol == backspaceKey) {
-            const nextSymbol = inputValue.slice(cursorPosition-2, cursorPosition-1);
-            console.log("next: " + nextSymbol);
-            if (nextSymbol == delimiter) {
-                inputValue = inputValue.slice(0, cursorPosition-2) + inputValue.slice(cursorPosition);
-                console.log("newinput: " + inputValue);
-            }
+        const keyCode = e.keyCode;
+
+        const checkDelimiter = allDelimitersCode.includes(keyCode);
+        const needAddDelimiter = delimiterPosition.includes(cursorPosition);
+
+        if ( keyCode < 47 || keyCode > 57) {
+            e.preventDefault();
         }
-        if ( delimiterPosition.includes(cursorPosition) ) {
-            //add delimiter to input result
+
+
+        if ( needAddDelimiter ) {
+            this.value += delimiter;
+            if (checkDelimiter) {
+                e.preventDefault();
+            }
         }
 
         console.log('input: ' + inputValue);
         console.log('position: ' + cursorPosition);
-        console.log('key: ' + enteredSymbol);
-        return inputValue.slice(0, 10);
+        console.log('key: ' + keyCode);
+        console.log('length: ' + this.value.length);
     }
 
     window.addEventListener("DOMContentLoaded", addMaskListenerToDocument)
