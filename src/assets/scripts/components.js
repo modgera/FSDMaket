@@ -1,1 +1,1 @@
-import '../../views/components/field-text/field-text';
+import '../../views/components/field-text/_masked_date';
