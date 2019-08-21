@@ -4,11 +4,15 @@ const webpack = require('webpack');
 const wpPages = require('./config/wp-pages');
 const path = require('path');
 
+const ifdefOpts = {
+  includeCodeForTests: false,
+  "ifdef-verbose": true       // add this for verbose output
+};
+
 module.exports = env  => {
   return {
     entry: './src/index.js',
     mode: 'development',
-
     output: {
       path: __dirname + "/build",
       filename: 'bundle.js'
@@ -27,14 +31,15 @@ module.exports = env  => {
       new MiniCssExtractPlugin({
         filename: 'public/styles/[name].bundle.css',
         chunkFilename: '[id].css',
-      }),
+      })
+      /*,
 
       new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
         'window.$': 'jquery',
         'window.jQuery': 'jquery'
-      })
+      })*/
     ],
 
     module: {
@@ -42,12 +47,15 @@ module.exports = env  => {
           {
             test: /\.m?js$/,
             exclude: /(node_modules|bower_components)/,
-            use: {
+            use: [
+            {
               loader: 'babel-loader',
               options: {
                 presets: ['@babel/preset-env']
               }
-            }
+            },
+            { loader: "ifdef-loader", options: ifdefOpts }
+          ]
           },
 
           {

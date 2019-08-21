@@ -4,11 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --require @babel/register ./src/**/*.spec.js*",
+    "wtest": "mocha --watch --require @babel/register ./src/**/*.spec.js* --watch-extensions js",
     "build": "rimraf dist && webpack --config ./webpack.config.js --env.NODE_ENV=development --mode=development --progress",
     "dev-network": "webpack-dev-server --config ./webpack.config.js --env.NODE_ENV=development --mode=development --progress --open --host 0.0.0.0",
     "dev": "webpack-dev-server --config ./webpack.config.js -env.NODE_ENV=development --mode=development --progress --open",
-    "prod": "rimraf dist && webpack --config ./webpack.config.js --env.NODE_ENV=production --mode=production -p --progress "
+    "prod": "rimraf dist && webpack --config ./webpack.config.js --env.NODE_ENV=production --mode=production -p --progress"
   },
   "author": "",
   "license": "ISC",
@@ -26,8 +27,10 @@
     "webpack": "^4.38.0"
   },
   "dependencies": {
+    "babel-plugin-rewire": "^1.2.0",
     "chai": "^4.2.0",
     "css-loader": "^3.1.0",
+    "ifdef-loader": "^2.1.4",
     "jquery": "^3.4.1",
     "mini-css-extract-plugin": "^0.8.0",
     "mocha": "^6.2.0",
