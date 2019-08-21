@@ -1,14 +1,15 @@
-(function() {
-    const delimiter = ".";
-    const dayEndPosition = 2;
-    const monthEndPosition = 5;
-    const delimiterPositions = [dayEndPosition, monthEndPosition];
-    const potentialDelimiters = [44,46,47]; // delimiters ,./
-
-    window.addEventListener("DOMContentLoaded", addMaskListenerToDocument);
+const createMaskForDate = (function() {
+    const params = {
+        delimiter: '.',
+        dayEndPosition: 2,
+        monthEndPosition: 5,
+        delimiterPositions: [2, 5],
+        potentialDelimiters: [44,46,47], // delimiters ,./
+        className: ''
+    };
 
     function addMaskListenerToDocument() {
-        const elements = document.querySelectorAll('.field-text__input_masked_date');
+        const elements = document.querySelectorAll(params.className);
         elements.forEach(addMaskEventListenersToInput);
     }
 
@@ -19,6 +20,7 @@
 
     function maskDateKeyDownEvent(e) {
         e.preventDefault();
+        const {delimiter, dayEndPosition, monthEndPosition, delimiterPositions, potentialDelimiters} = params;
         let inputValue = this.value;
         const cursorPosition = this.selectionStart;
         const keyCode = e.keyCode;
@@ -55,6 +57,7 @@
     }
 
     const checkInputValue = (cursorPosition, inputValue, enteredNumber) => {
+        const {dayEndPosition, monthEndPosition} = params;
         const valueArray = inputValue.split('');
         if (cursorPosition < dayEndPosition) {
             return checkDay(enteredNumber, cursorPosition, valueArray);
@@ -81,6 +84,7 @@
         }
     }
     const checkMonth = (enteredNumber, cursorPosition, valueArray) => {
+        const dayEndPosition = params.dayEndPosition;
         if (cursorPosition == dayEndPosition || cursorPosition == dayEndPosition + 1) {
             return (enteredNumber < 2) ? true : false;
         } else if (valueArray[dayEndPosition + 1] == 1) {
@@ -90,21 +94,34 @@
         }
     }
 
-    const checkYear = (enteredNumber, inputValue) => {
-        let yearPart = inputValue.split('.')[2];
-        if (yearPart === undefined) {
-            yearPart = enteredNumber;
-        } else {
-            yearPart += enteredNumber;
-        }
+    const getValidYearPart = (inputValue, enteredNumber) => {
+        const yearPart = inputValue.split(params.delimiter)[2];
+        return (yearPart === undefined) ? enteredNumber : yearPart + enteredNumber;
+    }
 
-        const yearPartLen = yearPart.length;
+    const checkYear = (enteredNumber, inputValue) => {
+        const validYearPart = getValidYearPart(inputValue, enteredNumber);
+        const yearPartLen = validYearPart.length;
         const currentYear = '' + new Date().getFullYear();
         const slicedCurrentYear = currentYear.slice(0, yearPartLen);
         const minYear = '' + (currentYear - 150);
         const slicedMinYear = minYear.slice(0, yearPartLen);
-        return (yearPart >= slicedMinYear && yearPart <= slicedCurrentYear) ? true : false;
+        return (validYearPart >= slicedMinYear && validYearPart <= slicedCurrentYear) ? true : false;
     }
 
-}());
+    const validateDelimiter = (delimiter) => {
+        if (delimiter) {
+            const delimiterCode = delimiter.charCodeAt();
+            if (!params.potentialDelimiters.includes(delimiterCode)) {
+                params.delimiter = '.';
+            }
+        }
+    }
 
+    return function(props) {
+        Object.assign(params, props);
+        validateDelimiter(props.delimiter);
+        window.addEventListener("DOMContentLoaded", addMaskListenerToDocument);
+    }
+}) ();
+export default createMaskForDate;
