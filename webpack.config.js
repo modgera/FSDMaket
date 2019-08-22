@@ -53,7 +53,8 @@ module.exports = env  => {
               options: {
                 presets: ['@babel/preset-env']
               }
-            },
+            }
+            ,
             { loader: "ifdef-loader", options: ifdefOpts }
           ]
           },

@@ -1,42 +1,63 @@
 import { expect } from 'chai';
-//import 'babel-plugin-rewire';
 
 import createMaskForDate from './_masked_date';
 
-describe('checkDay (F)', () => {
-  it(`if first number < 4 then true`, () => {
-    const checkDay = createMaskForDate.checkDay;
-    expect(checkDay(1,0,[])).to.eql(true);
-  });
+describe('propsExists (F)', () => {
+    const propsExists = createMaskForDate.propsExists;
+    it(`props is not defined`, () => {
+        expect(propsExists()).to.eql(false);
+    });
 
-  it(`if first number >= 4 then false`, () => {
-    const checkDay = createMaskForDate.checkDay;
-    expect(checkDay(4,0,[])).to.eql(false);
-  });
-
-  it(`if first number is 0 and second number is 0 then false`, () => {
-    const checkDay = createMaskForDate.checkDay;
-    expect(checkDay(0,1,[0])).to.eql(false);
-  });
-
-  it(`if first number is 0 and second number > 0 then true`, () => {
-    const checkDay = createMaskForDate.checkDay;
-    expect(checkDay(2,1,[0])).to.eql(true);
-  });
-
-  it(`if first number is 2 and second number is 0 then true`, () => {
-    const checkDay = createMaskForDate.checkDay;
-    expect(checkDay(0,1,[2])).to.eql(true);
-  });
-
-  it(`if first number is 3 and second number < 2 then true`, () => {
-    const checkDay = createMaskForDate.checkDay;
-    expect(checkDay(1,1,[3])).to.eql(true);
-  });
-
-  it(`if first number is 3 and second number <= 2 then false`, () => {
-    const checkDay = createMaskForDate.checkDay;
-    expect(checkDay(1,1,[3])).to.eql(true);
-  });
+    it(`props is defined`, () => {
+        const propsExists = createMaskForDate.propsExists;
+        expect(propsExists({someParam:''})).to.eql(true);
+    });
 
 });
+
+describe('setParams (F)', () => {
+    const setParams = createMaskForDate.setParams;
+    it(`class name is not found`, () => {
+        expect(setParams({})).to.eql(false);
+    });
+
+    it(`class name was found, but it's empty`, () => {
+        expect(setParams({className:''})).to.eql(false);
+    });
+
+    it(`class name was found and it's good`, () => {
+        expect(setParams({className:'some-class-name'})).to.eql(true);
+    });
+
+});
+
+describe('validateProps (F)', () => {
+    const validateProps = createMaskForDate.validateProps;
+    it(`class name is not found`, () => {
+        expect(validateProps({})).to.eql(false);
+    });
+
+    it(`empty props`, () => {
+        expect(validateProps()).to.eql(false);
+    });
+
+});
+
+describe('getClassSelector (F)', () => {
+    const getClassSelector = createMaskForDate.getClassSelector;
+    it(`add . before 'some-class'`, () => {
+        expect(getClassSelector('some-class')).to.eql('.some-class');
+    });
+
+    it(`return '.some-class' without change`, () => {
+        expect(getClassSelector('.some-class')).to.eql('.some-class');
+    });
+
+});
+
+
+
+
+
+
+

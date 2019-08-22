@@ -1,140 +1,120 @@
 const params = {
-    delimiter: '.',
-    dayEndPosition: 2,
-    monthEndPosition: 5,
-    delimiterPositions: [2, 5],
+    mask: '',
+    delimiter:'',
+    delimiterPosition:'',
     className: ''
 };
-
-const potentialDelimiters = [44,45,46,47]; // delimiters ,-./
+const allowedDelimiters = ['.','/','-'];
 
 const createMaskForDate = (props) => {
-    Object.assign(params, props); //{...params, ...props}
-    validateDelimiter(props.delimiter);
-    window.addEventListener("DOMContentLoaded", addMaskListenerToDocument);
-    return params;
+    console.log(props);
+    if (validateProps(props)) {
+        window.addEventListener("DOMContentLoaded", addMaskListenerToDocument);
+    }
 }
 export default createMaskForDate;
 
+const validateProps = (props) =>  propsExists(props) && setParams(props);
 
+const propsExists = (props) => {
+    if (!props) {
+        console.error('Params is not defined');
+        return false;
+    }
+    return true;
+}
 
-const validateDelimiter = (delimiter) => {
-    if (delimiter) {
-        const delimiterCode = delimiter.charCodeAt();
-        if (!potentialDelimiters.includes(delimiterCode)) {
-            params.delimiter = '.';
-        }
+const setParams = ({mask = 'XX.XX.XXXX', className}) => {
+    if (className === undefined || !className) {
+        console.error('Class name for masking is not found');
+        return false;
+    }
+
+    const delimiterInfo = getDelimiterInfo(mask);
+    if (!delimiterInfo) {
+        return false;
+    }
+
+    params.className = getClassSelector(className);
+    params.mask = mask;
+    Object.assign(params, delimiterInfo);
+    return true;
+}
+
+const getClassSelector = (className) => (className.slice(0,1) === '.') ? className : '.' + className;
+
+const getDelimiterInfo = (mask) => {
+    const maskArray = mask.split('');
+    const delimiter = findDelimiter(maskArray);
+    if (!delimiter) {
+        console.error("Delimiter is incorrect");
+        return false;
+    }
+    const delimiterPosition = findDelimiterPositions(maskArray, delimiter);
+    return {
+        delimiter,
+        delimiterPosition
     }
 }
 
+const findDelimiter = (mask) => {
+    const delimitersArray = mask.filter( (elem) => allowedDelimiters.includes(elem) )
+    if (delimitersArray.length > 0) {
+        const uniqueDelimiters = [...new Set(delimitersArray)];
+        if (uniqueDelimiters.length == 1) {
+            return uniqueDelimiters[0];
+        }
+    }
+    return null;
+}
 
-const addMaskListenerToDocument = () => {
-    const elements = document.querySelectorAll(params.className);
+const findDelimiterPositions = (mask, delimiter) => {
+    return mask.reduce( (pos, elem, i) => elem === delimiter ? pos.concat(i) : pos, []);
+}
+
+
+function addMaskListenerToDocument() {
+    const elementsNodes = document.querySelectorAll(params.className);
+    const elements = Array.from(elementsNodes);
     elements.forEach(addMaskEventListenersToInput);
 }
 
 const addMaskEventListenersToInput = (input) => {
-    input.addEventListener("keypress", maskDateKeyDownEvent, false);
-    input.setAttribute("maxlength", 10);
+    input.addEventListener("input", maskDateInput, false);
 }
 
-function maskDateKeyDownEvent(e) {
-    e.preventDefault();
-    const {delimiter, dayEndPosition, monthEndPosition, delimiterPositions} = params;
-    let inputValue = this.value;
-    const cursorPosition = this.selectionStart;
-    const keyCode = e.keyCode;
-
-    if (potentialDelimiters.includes(keyCode) && delimiterPositions.includes(cursorPosition)) {
-        inputValue += delimiter;
-        this.value = inputValue.slice(0, 10);
-        return true;
-    }
-
-    if ( keyCode > 47 && keyCode < 58) {
-        const enteredNumber = String.fromCharCode(keyCode);
-        const checkValue = checkInputValue(cursorPosition, inputValue, enteredNumber);
-
-        if (checkValue) {
-            inputValue = inputValue.slice(0, cursorPosition) + enteredNumber + inputValue.slice(cursorPosition);
-            inputValue = inputValue.split(delimiter).join('');
-
-            if (inputValue.length > dayEndPosition) {
-                inputValue = inputValue.slice(0, dayEndPosition) + delimiter + inputValue.slice(dayEndPosition);
-            }
-
-            if (inputValue.length > monthEndPosition) {
-                inputValue = inputValue.slice(0, monthEndPosition) + delimiter + inputValue.slice(monthEndPosition);
-            }
-
-            this.value = inputValue.slice(0, 10);
-            this.selectionStart = cursorPosition + 2;
-            this.selectionEnd = cursorPosition + 2;
-            return true;
-        }
-    }
-    return false;
+function maskDateInput(e) {
+    const cursorPosition = this.selectionEnd;
+    this.value = getFormatedInput(this.value);
+    this.selectionEnd = cursorPosition + 1;
 }
 
-const checkInputValue = (cursorPosition, inputValue, enteredNumber) => {
-    const {dayEndPosition, monthEndPosition} = params;
-    const valueArray = inputValue.split('');
-    if (cursorPosition < dayEndPosition) {
-        return checkDay(enteredNumber, cursorPosition, valueArray);
-    }
-
-    if (cursorPosition <= monthEndPosition && cursorPosition >= dayEndPosition) {
-        return checkMonth(enteredNumber, cursorPosition, valueArray);
-    }
-
-    if (cursorPosition >= monthEndPosition) {
-        return checkYear(enteredNumber, inputValue);
-    }
+const getFormatedInput = (inputValue) => {
+    const maskLength = params.mask.length;
+    return  inputValue
+                    .replace(/\D/g,'')
+                    .split('')
+                    .reduce(setDelimiters(),[])
+                    .join('')
+                    .slice(0, maskLength)
 }
 
-const checkDay = (enteredNumber, cursorPosition, valueArray) => {
-    if (cursorPosition == 0) {
-        return (enteredNumber < 4) ? true : false;
-    } else {
-        const firstNumber = valueArray[0];
-        if (firstNumber == 3) {
-            return (enteredNumber < 2) ? true : false;
-        } else {
-            return ( (enteredNumber == 0 && firstNumber > 0) || enteredNumber > 0 ) ? true : false;
-        }
-    }
-}
-const checkMonth = (enteredNumber, cursorPosition, valueArray) => {
-    const dayEndPosition = params.dayEndPosition;
-    if (cursorPosition == dayEndPosition || cursorPosition == dayEndPosition + 1) {
-        return (enteredNumber < 2) ? true : false;
-    } else if (valueArray[dayEndPosition + 1] == 1) {
-        return (enteredNumber < 3) ? true : false;
-    } else {
-        return (enteredNumber != 0) ? true : false;
-    }
+const setDelimiters = () => {
+    const {delimiterPosition, delimiter} = params;
+    return (res, elem) => delimiterPosition.includes(res.length)
+                                            ? res.concat(delimiter).concat(elem)
+                                            : res.concat(elem)
 }
 
-const checkYear = (enteredNumber, inputValue) => {
-    const validYearPart = getValidYearPart(inputValue, enteredNumber);
-    const yearPartLen = validYearPart.length;
-    const currentYear = '' + new Date().getFullYear();
-    const slicedCurrentYear = currentYear.slice(0, yearPartLen);
-    const minYear = '' + (currentYear - 150);
-    const slicedMinYear = minYear.slice(0, yearPartLen);
-    return (validYearPart >= slicedMinYear && validYearPart <= slicedCurrentYear) ? true : false;
-}
 
-const getValidYearPart = (inputValue, enteredNumber) => {
-    const yearPart = inputValue.split(params.delimiter)[2];
-    return (yearPart === undefined) ? enteredNumber : yearPart + enteredNumber;
-}
 
 /// #if includeCodeForTests
-    createMaskForDate.checkDay = checkDay;
-    createMaskForDate.checkMonth = checkMonth;
-    createMaskForDate.checkYear = checkYear;
-    createMaskForDate.getValidYearPart = getValidYearPart;
-    createMaskForDate.validateDelimiter = validateDelimiter;
-    createMaskForDate.checkInputValue = checkInputValue;
+    createMaskForDate.setParams = setParams;
+    createMaskForDate.propsExists = propsExists;
+    createMaskForDate.validateProps = validateProps;
+    createMaskForDate.getClassSelector = getClassSelector;
+    createMaskForDate.getDelimiterInfo = getDelimiterInfo;
+    createMaskForDate.findDelimiter = findDelimiter;
+    createMaskForDate.findDelimiterPositions = findDelimiterPositions;
+    createMaskForDate.getFormatedInput = getFormatedInput;
 /// #endif
